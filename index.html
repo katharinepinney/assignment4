@@ -1,0 +1,208 @@
+<!doctype html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Untitled Document</title>
+	<style>
+	input, label
+		{
+			display: block;
+		}
+	form
+		{
+			padding: 0px 10px;
+		}
+	header
+		{
+			padding: 0px 10px 0px;
+		}
+	</style>
+</head>
+
+<body>
+	<header>
+		<h1>Lottery</h1>
+	</header>
+	<script language="javascript">
+		
+		
+		//Lottery Problem
+		
+		//array with 6 spots
+		var nums = new Array(5);
+			
+		//for loop that generates the random numbers
+		for (n=0; n<=4; n++)
+			{
+				//picks random number
+				nums[n] = Math.round((Math.random() * 48) + 1);
+			}
+		
+		//gets the random lucky ball number
+		luckyBall = Math.round((Math.random() * 18) + 1);
+			
+		//writes array
+		document.write(nums + "<br>");
+		
+		//sorting function
+		function numberSort(a,b)
+			{
+				return a-b;
+			}
+		
+		//writes sorted array
+		nums.sort(numberSort);
+		document.write(nums);
+		
+		//function that extracts form information
+		function extractNums()
+		{
+			//extracts user inputs from form
+			var userNums = document.getElementById("5nums").value;
+			//removes spaces from array
+			userNums = userNums.split(" ");
+			//extracts user lucky ball input from form
+			userLuckyBall = document.getElementById("luckyBall").value;
+			
+			//compares user inputs with actual numbers
+			matches = 0;
+			for (n=0; n<userNums.length; n++)
+				{
+					if (userNums[n]==nums[n])
+						matches = matches+1;
+				}
+			
+			//compares user lucky ball input with actual input
+			luckyBallMatch = false;
+			if (luckyBall==userLuckyBall)
+				luckyBallMatch = true;
+			
+			if ((matches==0) && (luckyBallMatch==true))
+				document.write("You win $4!")
+			
+			else if ((matches==1) && (luckyBallMatch==true))
+				document.write("You win $6!")
+			
+			else if ((matches==2) && (luckyBallMatch==false))
+				document.write("You win $3!")
+			
+			else if ((matches==2) && (luckyBallMatch==true))
+				document.write("You win $25!")
+			
+			else if ((matches==3) && (luckyBallMatch==false))
+				document.write("You win $20!")
+			
+			else if ((matches==3) && (luckyBallMatch==true))
+				document.write("You win $150!")
+			
+			else if ((matches==4) && (luckyBallMatch==false))
+				document.write("You win $200!")
+			
+			else if ((matches==4) && (luckyBallMatch==true))
+				document.write("You win $5,000!")
+			
+			else if ((matches==5) && (luckyBallMatch==false))
+				document.write("You win $25,000 a YEAR for LIFE!")
+			
+			else if ((matches==5) && (luckyBallMatch==true))
+				document.write("You win $7,000 a WEEK for LIFE!")
+			else 
+				document.write("You didn't win anything. :(")
+		}
+		
+		
+		//Joes Hotdogs Problem
+		
+		//Create an associative array to store all items and prices, and another to store items and quantities.
+		var itemPrices = {hotdogs: 3.25, frenchfries:2.00, drinks:1.50};
+				
+		function placeOrder()
+		{
+			//extracts user input for hotdogs
+			numHotdogs = document.getElementById("hotdogsQ").value;
+			
+			//extracts user input for french fries
+			numFrenchfries = document.getElementById("frenchfriesQ").value;
+			
+			//extracts user input for drinks
+			numDrinks = document.getElementById("drinksQ").value;
+			
+			//creates associative array for user inputs
+			var itemQuantities = {hotdogs: numHotdogs, frenchfries: numFrenchfries, drinks: numDrinks};
+			document.write("Hotdogs: " + itemQuantities.hotdogs + "<br>" + "Frenchfries: " + itemQuantities.frenchfries + "<br>" + "Drinks: " + itemQuantities.drinks + "<br>")
+			
+			//creates associative array for the total
+			var total = {hotdogs: 0, frenchfries: 0, drinks: 0};
+			
+			//for loop that iterates through associative arrays and finds the total
+			for (var i in itemPrices)
+				{
+					total[i]=itemQuantities[i]*itemPrices[i];
+				}
+			
+			//subtotal
+			n = total.drinks+total.frenchfries+total.hotdogs;
+			//makes subTotal two decimal points
+			subTotal = n.toFixed(2);
+			
+			document.write("The subtotal is $" + subTotal + "<br>")
+			
+			//tax
+			n = subTotal/6.25;
+			//makes tax two decimal points
+			tax = n.toFixed(2);
+			document.write("The tax is $" + tax + "<br>")
+			
+			//finds information if the order costs more than $20
+			if (subTotal>=20)
+				{
+					n = subTotal/10;
+					discount = n.toFixed(2);
+					document.write("The discount is $" + discount + "<br>")
+					var m = parseFloat(subTotal) + parseFloat(tax) - parseFloat(discount);
+					document.write("The total is $" + m)
+				}
+			//finds information if the order costs less than $20
+			else
+				{
+					var m = parseFloat(subTotal) + parseFloat(tax);
+					Finaltotal = m.toFixed(2);
+					document.write("The total is $" + Finaltotal)
+				}
+		}
+	</script>
+
+	
+	<div class="forms">
+		<form>
+			<label for="nums">Enter 5 numbers with spaces in between</label>
+			<input type="text" name="5 numbers" id="5nums"><br>
+			
+			<label for="luckyBall">Enter Lucky Ball number</label>
+			<input type="text" name="luckyball" id="luckyBall"><br>
+			
+			<input type="button" name="submit_LuckyBall" id="btnID1" value="Submit" onClick="extractNums()">
+		</form>
+	</div>
+	
+	<header>
+		<h1>Joe's Hotdogs</h1>
+	</header>
+	<div class="forms">
+		<form>
+			<label for="hotdogs">How many hotdogs would you like?</label>
+			<input type="number" name="hotdogs" id="hotdogsQ"><br>
+			
+			<label for="frenchfries">How many french fries would you like?</label>
+			<input type="number" name="frenchfries" id="frenchfriesQ"><br>
+			
+			<label for="drinks">How many drinks would you like?</label>
+			<input type="number" name="drinks" id="drinksQ"><br>
+			
+			<input type="button" name="submit_order" id="btnID" value="Order" onClick="placeOrder()">
+			
+		</form>
+	</div>
+	
+</body>
+</html>
